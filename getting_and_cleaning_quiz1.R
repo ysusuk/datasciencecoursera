@@ -14,9 +14,8 @@ if(!file.exists(".data/housing_hid.csv")) {
 }
 
 housing <- read.csv(".data/housing_hid.csv")
-val <- housing$VAL[housing$VAL == 24]
-val.not.na <- val[!is.na(val)]
-print(c("How many properties are worth $1,000,000 or more", length(val.not.na)))
+val <- housing$VAL[!is.na(housing$VAL) & housing$VAL == 24]
+print(paste(c("How many properties are worth $1,000,000 or more", length(val)), collapse = " ")
 
 ### xlsx
 
@@ -24,8 +23,8 @@ if(!file.exists(".data/gas_aquisition.xlsx")) {
   fileUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FDATA.gov_NGAP.xlsx"
   download.file(fileUrl, destfile=".data/gas_aquisition.xlsx", method="curl")
 }
-dat <- read.xlsx(".data/gas_aquisition.xlsx", sheetIndex=1, colIndex=7:15, rowIndex=18:23)
-print(c("result", sum(dat$Zip*dat$Ext,na.rm=T)))
+dat <- read.xlsx(".data/gas_aquisition.xlsx", sheetIndex=1, rowIndex=18:23, colIndex=7:15)
+print(c("result", sum(dat$Zip*dat$Ext, na.rm=TRUE)))
 
 ### xml
 
