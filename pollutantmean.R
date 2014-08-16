@@ -17,10 +17,14 @@ pollutantmean <- function(directory, pollutant, id = 1:332) {
       paste0("00", monitor)
     else if (nchar(monitor) == 2)
       paste0("0", monitor)
+    else monitor
   }
   
   read <- function(monitorId) {
-    read.csv(paste0(directory, "/", complete(monitorId), ".csv"))
+    file <- paste0(directory, "/", complete(monitorId), ".csv")
+    if (file.exists(file)) {
+      read.csv(file)  
+    }
   }
   
   pollutants <- unlist(sapply(id, read)[pollutant,])
