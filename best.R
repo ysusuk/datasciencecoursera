@@ -11,6 +11,8 @@ best <- function(state, disease) {
       17
     else if (disease == "pneumonia")
       23
+    else
+      stop("invalid outcome")
   }
   
   col <- match(disease)
