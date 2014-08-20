@@ -1,4 +1,4 @@
-best <- function(state, disease) {
+best <- function(state, disease, last = FALSE) {
   ## Read outcome data
   ## Check that state and outcome are valid
   ## Return hospital name in that state with lowest 30-day death
@@ -22,14 +22,19 @@ best <- function(state, disease) {
   
   col <- match(disease)
   
-  outcome.in.state <- outcome[outcome$State == state,]
-
+  outcome.in.state <- outcome[outcome$State == state, ]
   # outcome.in.state <- outcome.in.state[!is.na(outcome.in.state[, col]), ]
   outcome.in.state[, col] <- as.numeric(outcome.in.state[, col])
   
   outcome.in.state.sorted <- outcome.in.state[order(outcome.in.state$Hospital.Name), ]
 
-  observation <- outcome.in.state.sorted[which.min(outcome.in.state.sorted[, col]), ]
+  func <-
+    if (last)
+      which.max
+    else
+      which.min
+  
+  observation <- outcome.in.state.sorted[func(outcome.in.state.sorted[, col]), ]
   
   # observation <- outcome.in.state[which.min(outcome.in.state[, col]), ]
   # print(colnames(observation)[col])
