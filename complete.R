@@ -32,7 +32,7 @@ complete <- function(directory, id = 1:332) {
     }
   }
   
-  not.na <- function(x) x[!is.na(x$Date) & !is.na(x$sulfate) & !is.na(x$nitrate) & !is.na(x$ID), ]
+  not.na <- function(x) x[complete.casses(x), ]
   
   observations <- lapply(id, read)
   observations.not.na <- lapply(observations, not.na)

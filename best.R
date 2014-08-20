@@ -3,6 +3,11 @@ best <- function(state, disease) {
   ## Check that state and outcome are valid
   ## Return hospital name in that state with lowest 30-day death
   ## rate
+  outcome <- read.csv(".data/outcome-of-care-measures.csv")
+  
+  if (!(state %in% outcome$State)) {
+    stop("invalid state")
+  }
   
   match <- function(disease) {
     if (disease == "heart attack")
@@ -17,9 +22,16 @@ best <- function(state, disease) {
   
   col <- match(disease)
   
-  outcome <- read.csv(".data/outcome-of-care-measures.csv")
   outcome.in.state <- outcome[outcome$State == state,]
+
+  # outcome.in.state <- outcome.in.state[!is.na(outcome.in.state[, col]), ]
   outcome.in.state[, col] <- as.numeric(outcome.in.state[, col])
-  observation <- outcome.in.state[which.min(outcome.in.state[, col]), ]
-  observation$Hospital.Name
+  
+  outcome.in.state.sorted <- outcome.in.state[order(outcome.in.state$Hospital.Name), ]
+
+  observation <- outcome.in.state.sorted[which.min(outcome.in.state.sorted[, col]), ]
+  
+  # observation <- outcome.in.state[which.min(outcome.in.state[, col]), ]
+  # print(colnames(observation)[col])
+  toString(observation$Hospital.Name)
 }
