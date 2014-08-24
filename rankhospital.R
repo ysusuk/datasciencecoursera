@@ -1,3 +1,4 @@
+source("best.R")
 rankhospital <- function(state, disease, num = "best") {
   ## Read outcome data
   ## Check that state and outcome are valid

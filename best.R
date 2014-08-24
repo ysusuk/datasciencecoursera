@@ -28,11 +28,7 @@ best <- function(state, disease, last = FALSE) {
   
   outcome.in.state.sorted <- outcome.in.state[order(outcome.in.state$Hospital.Name), ]
 
-  func <-
-    if (last)
-      which.max
-    else
-      which.min
+  func <- ifelse(last, which.max, which.min)
   
   observation <- outcome.in.state.sorted[func(outcome.in.state.sorted[, col]), ]
   

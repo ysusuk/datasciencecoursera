@@ -1,6 +1,3 @@
-# test_that("", {
-#  
-# })
 setwd("../..")
 
 expect_that(best("TX", "heart attack"), equals("CYPRESS FAIRBANKS MEDICAL CENTER"))
