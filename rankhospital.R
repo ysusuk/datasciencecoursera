@@ -33,7 +33,13 @@ rankhospital <- function(state, disease, num = "best") {
   
   outcome.in.state <- outcome[outcome$State == state, ]
   # outcome.in.state <- outcome.in.state[!is.na(outcome.in.state[, col]), ]
-  outcome.in.state[, col] <- as.numeric(outcome.in.state[, col])
+  
+  # outcome.in.state[, col] <- as.numeric(outcome.in.state[, col])
+  outcome.in.state[, col] <- {
+    rate <- outcome.in.state[, col]
+    as.numeric(levels(rate))[rate]
+  }
+  
   outcome.in.state.sorted <- outcome.in.state[order(outcome.in.state[, col]), ]
   toString(outcome.in.state.sorted[num, 2])
 }

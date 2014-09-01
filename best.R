@@ -24,7 +24,10 @@ best <- function(state, disease, last = FALSE) {
   
   outcome.in.state <- outcome[outcome$State == state, ]
   # outcome.in.state <- outcome.in.state[!is.na(outcome.in.state[, col]), ]
-  outcome.in.state[, col] <- as.numeric(outcome.in.state[, col])
+  outcome.in.state[, col] <- {
+    rate <- outcome.in.state[, col]
+    as.numeric(levels(rate))[rate]
+  }
   
   outcome.in.state.sorted <- outcome.in.state[order(outcome.in.state$Hospital.Name), ]
 

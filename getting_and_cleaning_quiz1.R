@@ -15,7 +15,7 @@ if(!file.exists(".data/housing_hid.csv")) {
 
 housing <- read.csv(".data/housing_hid.csv")
 val <- housing$VAL[!is.na(housing$VAL) & housing$VAL == 24]
-print(paste(c("How many properties are worth $1,000,000 or more", length(val)), collapse = " ")
+print(paste(c("How many properties are worth $1,000,000 or more", length(val)), collapse = " "))
 
 ### xlsx
 
@@ -44,33 +44,26 @@ if(!file.exists(".data/housing_pid.csv")) {
 }
 DT <- fread(".data/housing_pid.csv")
 
-start.time <- Sys.time()
-mean(DT[DT$SEX==1,]$pwgtp15); mean(DT[DT$SEX==2,]$pwgtp15);
-print(Sys.time() - start.time)
+print(system.time({
+  mean(DT[DT$SEX==1,]$pwgtp15)
+  mean(DT[DT$SEX==2,]$pwgtp15)
+}))
 
 # start.time <- Sys.time()
 # rowMeans(DT)[DT$SEX==1]; rowMeans(DT)[DT$SEX==2];
 # print(Sys.time() - start.time)
 DT <- fread(".data/housing_pid.csv")
-start.time <- Sys.time()
-mean(DT$pwgtp15,by=DT$SEX)
-print(Sys.time() - start.time)
+
+print(system.time(mean(DT$pwgtp15,by=DT$SEX)))
+
 
 DT <- fread(".data/housing_pid.csv")
-start.time <- Sys.time()
-DT[,mean(pwgtp15),by=SEX]
-print(Sys.time() - start.time)
+print(system.time(DT[,mean(pwgtp15),by=SEX]))
+
 
 DT <- fread(".data/housing_pid.csv")
-start.time <- Sys.time()
-sapply(split(DT$pwgtp15,DT$SEX),mean)
-print(Sys.time() - start.time)
+print(system.time(sapply(split(DT$pwgtp15,DT$SEX),mean)))
+
 
 DT <- fread(".data/housing_pid.csv")
-start.time <- Sys.time()
-tapply(DT$pwgtp15,DT$SEX,mean)
-print(Sys.time() - start.time)
-
-print("pwgtp15")
-
-
+print(time.system(tapply(DT$pwgtp15,DT$SEX,mean)))
